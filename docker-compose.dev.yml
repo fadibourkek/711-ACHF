@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: achf_postgres_dev
+    environment:
+      POSTGRES_USER: 711achf
+      POSTGRES_PASSWORD: 711achf_secret
+      POSTGRES_DB: 711_achf
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./infra/docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - achf_dev
+
+  redis:
+    image: redis:7-alpine
+    container_name: achf_redis_dev
+    command: redis-server --requirepass redis_secret
+    ports:
+      - "6379:6379"
+    networks:
+      - achf_dev
+
+volumes:
+  postgres_dev_data:
+
+networks:
+  achf_dev:
+    driver: bridge
