@@ -1,0 +1,13 @@
+{
+  "name": "711-achf",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": ["backend", "bot", "dashboard", "shared"],
+  "scripts": {
+    "dev": "docker-compose -f docker-compose.dev.yml up",
+    "prod": "docker-compose up -d",
+    "build": "npm run build --workspaces",
+    "db:migrate": "cd backend && npm run migration:run",
+    "db:seed": "cd backend && npm run seed"
+  }
+}
